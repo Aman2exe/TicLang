@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "Lexer.cpp"
+#include "Parser.cpp"
 using namespace std;
 
 int main(){
@@ -18,6 +19,11 @@ int main(){
         for (const auto& token : tokens){
             cout<<"Line "<< token.line<<" | Type ID: "<<static_cast<int>(token.type)<< " | Read Text Value: [" <<token.value<< "]"<<endl;
         }
+
+        Parser parser(tokens);
+        unique_ptr<BlockASTNode> programAST = parser.parseProgram();
+
+        cout << "--- Parse Success! Tree built successfully in memory with no structural compilation anomalies. ---" << endl ;
     }catch(const exception& e){
         cerr<<e.what()<<endl;
     }
