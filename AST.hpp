@@ -18,96 +18,96 @@ public:
 
 class StringASTNode : public ASTNode {
 public:
-    std::string value;
-    StringASTNode(std::string val) : value(val) {}
+    string value;
+    StringASTNode(string val) : value(val) {}
 };
 
 class IdentifierASTNode : public ASTNode {
 public:
-    std::string name;
-    IdentifierASTNode(std::string varName) : name(varName) {}
+    string name;
+    IdentifierASTNode(string varName) : name(varName) {}
 };
 
 class BinaryExprASTNode : public ASTNode {
 public:
-    std::string op; 
-    std::unique_ptr<ASTNode> left;
-    std::unique_ptr<ASTNode> right;
+    string op; 
+    unique_ptr<ASTNode> left;
+    unique_ptr<ASTNode> right;
 
-    BinaryExprASTNode(std::string operation, std::unique_ptr<ASTNode> lhs, std::unique_ptr<ASTNode> rhs)
-        : op(operation), left(std::move(lhs)), right(std::move(rhs)) {}
+    BinaryExprASTNode(string operation, unique_ptr<ASTNode> lhs, unique_ptr<ASTNode> rhs)
+        : op(operation), left(move(lhs)), right(move(rhs)) {}
 };
 
 class OutASTNode : public ASTNode {
 public:
-    std::unique_ptr<ASTNode> expression;
-    OutASTNode(std::unique_ptr<ASTNode> expr) : expression(std::move(expr)) {}
+    unique_ptr<ASTNode> expression;
+    OutASTNode(unique_ptr<ASTNode> expr) : expression(move(expr)) {}
 };
 
 // Updated: in(choice) syntax
 class InputASTNode : public ASTNode {
 public:
-    std::string varName;
-    InputASTNode(std::string name) : varName(name) {}
+    string varName;
+    InputASTNode(string name) : varName(name) {}
 };
 
 class AssignmentASTNode : public ASTNode {
 public:
-    std::string varName;
-    std::unique_ptr<ASTNode> value;
-    AssignmentASTNode(std::string name, std::unique_ptr<ASTNode> val)
-        : varName(name), value(std::move(val)) {}
+    string varName;
+    unique_ptr<ASTNode> value;
+    AssignmentASTNode(string name, unique_ptr<ASTNode> val)
+        : varName(name), value(move(val)) {}
 };
 
 class ArrayASTNode : public ASTNode {
 public:
-    std::vector<std::unique_ptr<ASTNode>> elements;
-    ArrayASTNode(std::vector<std::unique_ptr<ASTNode>> elems) : elements(std::move(elems)) {}
+    vector<unique_ptr<ASTNode>> elements;
+    ArrayASTNode(vector<unique_ptr<ASTNode>> elems) : elements(move(elems)) {}
 };
 
 class IndexASTNode : public ASTNode {
 public:
-    std::string arrayName;
-    std::unique_ptr<ASTNode> index;
-    IndexASTNode(std::string name, std::unique_ptr<ASTNode> idx)
-        : arrayName(name), index(std::move(idx)) {}
+    string arrayName;
+    unique_ptr<ASTNode> index;
+    IndexASTNode(string name, unique_ptr<ASTNode> idx)
+        : arrayName(name), index(move(idx)) {}
 };
 
 class ArrayAssignmentASTNode : public ASTNode {
 public:
-    std::string arrayName;
-    std::unique_ptr<ASTNode> index;
-    std::unique_ptr<ASTNode> value;
+    string arrayName;
+    unique_ptr<ASTNode> index;
+    unique_ptr<ASTNode> value;
     
-    ArrayAssignmentASTNode(std::string name, std::unique_ptr<ASTNode> idx, std::unique_ptr<ASTNode> val)
-        : arrayName(name), index(std::move(idx)), value(std::move(val)) {}
+    ArrayAssignmentASTNode(string name, unique_ptr<ASTNode> idx, unique_ptr<ASTNode> val)
+        : arrayName(name), index(move(idx)), value(move(val)) {}
 };
 
 class BlockASTNode : public ASTNode {
 public:
-    std::vector<std::unique_ptr<ASTNode>> statements;
+    vector<unique_ptr<ASTNode>> statements;
 };
 
 class CheckASTNode : public ASTNode {
 public:
-    std::unique_ptr<ASTNode> condition;
-    std::unique_ptr<BlockASTNode> body;
-    std::unique_ptr<BlockASTNode> elseBody; 
+    unique_ptr<ASTNode> condition;
+    unique_ptr<BlockASTNode> body;
+    unique_ptr<BlockASTNode> elseBody; 
 
-    CheckASTNode(std::unique_ptr<ASTNode> cond, std::unique_ptr<BlockASTNode> b)
-        : condition(std::move(cond)), body(std::move(b)), elseBody(nullptr) {}
+    CheckASTNode(unique_ptr<ASTNode> cond, unique_ptr<BlockASTNode> b)
+        : condition(move(cond)), body(move(b)), elseBody(nullptr) {}
 };
 
 class LoopASTNode : public ASTNode {
 public:
-    std::string loopVar;
-    std::unique_ptr<ASTNode> startExpr;
-    std::unique_ptr<ASTNode> endExpr;
-    std::unique_ptr<ASTNode> stepExpr;
-    std::unique_ptr<BlockASTNode> body;
+    string loopVar;
+    unique_ptr<ASTNode> startExpr;
+    unique_ptr<ASTNode> endExpr;
+    unique_ptr<ASTNode> stepExpr;
+    unique_ptr<BlockASTNode> body;
 
-    LoopASTNode(std::string var, std::unique_ptr<ASTNode> start, std::unique_ptr<ASTNode> end, std::unique_ptr<ASTNode> step, std::unique_ptr<BlockASTNode> b)
-        : loopVar(var), startExpr(std::move(start)), endExpr(std::move(end)), stepExpr(std::move(step)), body(std::move(b)) {}
+    LoopASTNode(string var, unique_ptr<ASTNode> start, unique_ptr<ASTNode> end, unique_ptr<ASTNode> step, unique_ptr<BlockASTNode> b)
+        : loopVar(var), startExpr(move(start)), endExpr(move(end)), stepExpr(move(step)), body(move(b)) {}
 };
 
 #endif // AST_HPP
