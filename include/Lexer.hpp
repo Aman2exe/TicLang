@@ -1,38 +1,39 @@
 #ifndef LEXER_HPP
 #define LEXER_HPP
 
-#include <string>
-#include <vector>
+#include<string>
+#include<vector>
+using namespace std;
 
-enum class TokenType {
+enum class TokenType{
     START, END, LOOP, CHECK, ELSE_CHECK, ELSE,
     IN, OUT, IDENTIFIER, NUMBER, STRING,
     ASSIGN, EQUAL, GT, LT, AND, OR,
-    LPAREN, RPAREN, LBRACKET, RBRACKET, COMMA, EOF_MARKER
+    LPAREN, RPAREN, LBRACKET, RBRACKET, COMMA, EOF_MARKER,
+    ADD, MINUS
 };
 
-struct Token {
+struct Token{
     TokenType type;
-    std::string value;
+    string value;
     int line;
 };
 
-class Lexer {
+class Lexer{
 private:
-    std::string src;
-    size_t pos;
+    string src;
+    size_t pos; 
     int line;
-
     char peek() const;
     char advance();
     void skipWhitespaceAndComments();
     Token readIdentifierOrKeyword();
-    Token readNumber();
+    Token readNumber(); 
     Token readString();
 
 public:
-    Lexer(std::string source);
-    std::vector<Token> tokenize();
+    Lexer(string source);
+    vector<Token> tokenize();
 };
 
-#endif // LEXER_HPP
+#endif 
